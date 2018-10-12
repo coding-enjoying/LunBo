@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>自动滚动</title>
+<style>
+	*{ margin:0; padding:0; list-style:none;}
+	a{ text-decoration:none; color:#fff;}
+	.box{ width:1366; position:relative; height:450px}
+	#imgList{ font-size:0; height:450px; position:absolute; left:0; top:0; transition:all 1s;}
+	#imgList li{ float:left; width:1366; height:450px;}
+	img{ width:1366px; height:450px;}
+	.btn{ position:absolute; width:50px; height:100px; text-align:center; line-height:100px; background:rgba(0,0,0,.5); top:50%; margin-top:-50px;}
+	#back{ left:30px;}
+	#next{ right:30px;}
+</style>
+<script>
+//	window.onload=function(){
+//		var obox=document.getElementById('box');
+//		var oImgs=document.getElementById('imgList');
+//		var oBack=document.getElementById('back');
+//		var oNext=document.getElementById('next');
+//		var aImg=document.getElementsByTagName('li');
+//		var timer=null;
+//		var j=0;
+//		oImgs.style.width=aImg[0].offsetWidth*3+'px';
+//		oNext.onclick=function(){
+//			slide();
+//		}
+//		oBack.onclick=function(){
+//			j--;
+//			if(j==-1){
+//				j=aImg.length-1;
+//			}
+//			oImgs.style.left=-j*aImg[0].offsetWidth+'px';
+//		}
+//		function slide(){
+//			j++;
+//			if(j==aImg.length){
+//				j=0;
+//			}
+//			oImgs.style.left=-j*aImg[0].offsetWidth+'px';
+//		}
+//		clearInterval(timer);
+//		timer=setInterval(slide,3000);
+//	}
+	window.onload=function(){
+		var oBox=document.getElementById('box');	
+		var oImgs=document.getElementById('imgList');	
+		var oBack=document.getElementById('back');	
+		var oNext=document.getElementById('next');	
+		var aImg=document.getElementsByTagName('li');
+		var j=0;
+		var timer
+		oImgs.style.width=aImg[0].offsetWidth*3+'px';
+		oNext.onclick=function(){
+			slide();
+		}
+		oBack.onclick=function(){
+			j--;
+			if(j==-1){
+				j=aImg.length-1;
+			}
+			oImgs.style.left=-j*aImg[0].offsetWidth+'px';
+		}
+		
+		function slide(){
+			j++;
+			if(j==aImg.length){
+				j=0;	
+			}
+			oImgs.style.left=-j*aImg[0].offsetWidth+'px';	
+		}
+		clearInterval(timer);
+		timer=setInterval(slide,3000);
+		
+		oBox.onmouseover=function(){
+			clearInterval(timer);
+		}
+		oBox.onmouseout=function(){
+			clearInterval(timer);	
+			timer=setInterval(slide,3000);
+		}
+	}
+</script>
+</head>
+
+<body>
+<div class="box" id="box">
+	<ul id="imgList">
+		<li><a href="javascript:;"><img src="1.jpg" alt=""></a></li>
+		<li><a href="javascript:;"><img src="2.jpg" alt=""></a></li>
+		<li><a href="javascript:;"><img src="3.jpg" alt=""></a></li>
+	</ul>
+	<a href="#" id="back" class="btn">back</a>
+	<a href="#" id="next" class="btn">next</a>
+	
+</div>
+</body>
+</html>

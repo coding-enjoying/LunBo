@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>跑马灯效果</title>
+<style>
+	*{ margin:0; padding:0; list-style:none;}
+	a{ text-decoration:none; color:#fff;}
+	.box{ width:1366; position:relative; height:450px; overflow:hidden;}
+	#imgList{ font-size:0; height:450px; position:absolute; left:0; top:0; /*transition:all 1s;*/}
+	#imgList li{ float:left; width:1366; height:450px;}
+	img{ width:1366px; height:450px;}
+	.btn{ position:absolute; width:50px; height:100px; text-align:center; line-height:100px; background:rgba(0,0,0,.5); top:50%; margin-top:-50px;}
+	#back{ left:30px;}
+	#next{ right:30px;}
+</style>
+<script>
+
+	window.onload=function(){
+		var oBox=document.getElementById('box');	
+		var oImgs=document.getElementById('imgList');	
+		var oBack=document.getElementById('back');	
+		var oNext=document.getElementById('next');	
+		var aImg=document.getElementsByTagName('li');
+		var j=-20;
+		var timer=null;
+		oImgs.innerHTML+=oImgs.innerHTML;//将列表中的内容复制一份即：变为6个li
+		oImgs.style.width= aImg[0].offsetWidth*6+'px';//增加ul的宽度
+		function move(){
+			timer=setInterval(function(){
+				oImgs.style.left=oImgs.offsetLeft+j+'px';//设置图片的滚动度速
+				//alert(oImgs.offsetLeft);此时该值为-20,offsetLeft本身就是一个数字
+				//alert(oImgs.style.left);此时该值为-20 而left则为字符串
+				if(oImgs.offsetLeft< -oImgs.offsetWidth/2){
+					//当列表距浏览器左边的距离小于前三个li的宽度时，把图片列表拉回至最初事实上后三个图片不会出现只是作为一个标志性的东西
+					oImgs.style.left='0px';
+				}
+			},40)	
+		}
+		move();
+		oNext.onmouseover=function(){
+			clearInterval(timer);
+			move();
+		}
+		oBack.onmouseover=function(){
+			clearInterval(timer);
+			timer=setInterval(function(){
+				oImgs.style.left=oImgs.offsetLeft-j+'px';	
+				if(oImgs.offsetLeft>0){
+					oImgs.style.left = -oImgs.offsetWidth/2 + 'px';
+				}
+			},40)
+		}
+		
+		
+	}
+</script>
+</head>
+
+<body>
+<div class="box" id="box">
+	<ul id="imgList">
+		<li><a href="javascript:;"><img src="1.jpg" alt=""></a></li>
+		<li><a href="javascript:;"><img src="2.jpg" alt=""></a></li>
+		<li><a href="javascript:;"><img src="3.jpg" alt=""></a></li>
+	</ul>
+	<a href="#" id="back" class="btn">back</a>
+	<a href="#" id="next" class="btn">next</a>
+	
+</div>
+</body>
+</html>
